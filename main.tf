@@ -11,6 +11,14 @@ resource "aws_ecs_service" "ecs-service" {
 //    enable = true
 //    rollback = true
 //  }
+  dynamic network_configuration {
+    for_each = var.network_mode == "awsvpc" ? [1] : []
+    content {
+      subnets = var.subnets
+      security_groups = var.security_groups
+    }
+
+  }
 
   load_balancer {
     target_group_arn = var.target_group_arn
@@ -26,5 +34,6 @@ resource "aws_ecs_service" "ecs-service" {
   tags = {
     Name = "${var.app_name}-${var.environment}-service"
     Deployment_Method = "terraform"
+    Environment = var.environment
   }
 }

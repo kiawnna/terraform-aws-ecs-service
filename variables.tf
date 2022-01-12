@@ -24,6 +24,7 @@ variable "capacity_provider_name" {
 }
 variable "capacity_provider_weight" {
   type = number
+  default = 1
 }
 variable "health_check_grace_period" {
   type = number
@@ -31,4 +32,14 @@ variable "health_check_grace_period" {
 }
 variable "container_name" {
   type = string
+}
+variable "network_mode" {
+  type = string
+  default = "awsvpc"
+}
+variable "subnets" {
+  type = list(string)
+}
+variable "security_groups" {
+  type = list(string)
 }
